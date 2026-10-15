@@ -1,0 +1,1157 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="O Greenlight revisa seus pull requests em segundos — apontando bugs, falhas de segurança, e testes faltando antes de qualquer humano abrir a aba."
+    />
+    <meta name="theme-color" content="#060A08" />
+    <title>Greenlight — revisão de código com IA para todo PR</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <!-- `js` gates the scroll-reveal styles: without it every element stays visible. -->
+    <script>
+      document.documentElement.classList.add('js');
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Ir para o conteúdo</a>
+
+    <!-- ============ Header ============ -->
+    <header class="header">
+      <div class="header__inner">
+        <a class="brand" href="#">
+          <svg
+            class="brand__mark"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <circle cx="18" cy="18" r="3"></circle>
+            <circle cx="6" cy="6" r="3"></circle>
+            <path d="M13 6h3a2 2 0 0 1 2 2v7"></path>
+            <line x1="6" x2="6" y1="9" y2="21"></line>
+          </svg>
+          <span class="brand__name">greenlight</span>
+        </a>
+
+        <nav class="nav" aria-label="Principal">
+          <a class="nav__link" href="#how-it-works">Como funciona</a>
+          <a class="nav__link" href="#features">Recursos</a>
+          <a class="nav__link" href="#pricing">Preços</a>
+          <a class="btn btn--primary nav__cta" href="#">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
+              />
+            </svg>
+            Instalar GitHub App
+          </a>
+        </nav>
+
+        <button
+          class="menu-toggle"
+          type="button"
+          id="menu-toggle"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          aria-label="Abrir menu"
+        >
+          <svg
+            class="menu-toggle__open"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M4 5h16"></path>
+            <path d="M4 12h16"></path>
+            <path d="M4 19h16"></path>
+          </svg>
+          <svg
+            class="menu-toggle__close"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M18 6 6 18"></path>
+            <path d="m6 6 12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div class="mobile-menu" id="mobile-menu" hidden>
+        <nav class="mobile-menu__nav" aria-label="Menu">
+          <a class="mobile-menu__link" href="#how-it-works">Como funciona</a>
+          <a class="mobile-menu__link" href="#features">Recursos</a>
+          <a class="mobile-menu__link" href="#pricing">Preços</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- ============ Hero ============ -->
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="glow hero__glow hero__glow--a" aria-hidden="true"></div>
+        <div class="glow hero__glow hero__glow--b" aria-hidden="true"></div>
+
+        <div class="container hero__inner">
+          <div class="hero__grid">
+            <div class="reveal">
+              <p class="eyebrow">// revisão de código no piloto automático</p>
+              <h1 class="hero__title" id="hero-title">Todo PR recebe o sinal verde.</h1>
+              <p class="hero__sub">
+                O Greenlight revisa seus pull requests em segundos — apontando bugs, falhas de segurança,
+                e testes faltando antes de qualquer humano abrir a aba.
+              </p>
+              <div class="hero__actions">
+                <a class="btn btn--primary" href="#">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
+                    />
+                  </svg>
+                  Instalar GitHub App
+                </a>
+                <button class="btn btn--ghost" type="button" id="replay-demo">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"
+                    ></path>
+                  </svg>
+                  Ver uma revisão de PR
+                </button>
+              </div>
+              <p class="hero__trust">Grátis para open source · setup em 2 min · GitHub e GitLab</p>
+            </div>
+
+            <!-- DiffDemo -->
+            <div class="hero__demo">
+              <div
+                class="glass demo"
+                id="demo"
+                role="region"
+                aria-label="Demonstração: o Greenlight revisando o pull request 482"
+              >
+                <div class="demo__chrome">
+                  <span class="demo__dots" aria-hidden="true">
+                    <span class="demo__dot"></span>
+                    <span class="demo__dot"></span>
+                    <span class="demo__dot"></span>
+                  </span>
+                  <span class="demo__title">pull/482 — feat: webhook retries</span>
+                  <span class="demo__branch">main ← feat/webhook-retries</span>
+                  <span class="chip" id="demo-chip">
+                    <svg
+                      class="chip__icon chip__icon--running spin"
+                      width="13"
+                      height="13"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
+                    </svg>
+                    <svg
+                      class="chip__icon chip__icon--ready"
+                      width="13"
+                      height="13"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"
+                      ></path>
+                      <path d="m16 9-5.5 5.5L8 12"></path>
+                    </svg>
+                    <span class="chip__label">Checagens em andamento</span>
+                  </span>
+                </div>
+
+                <div class="demo__file">
+                  <span class="demo__filename">api/webhooks.ts</span>
+                  <span class="demo__stats">
+                    <span class="demo__stats-add">+8</span> <span class="demo__stats-del">−1</span>
+                  </span>
+                </div>
+
+                <div class="demo__body">
+                  <div class="demo__main">
+                    <div class="demo__lines" id="demo-lines">
+                      <div class="demo__line demo__line--ctx" style="--i: 0">
+                        <span class="demo__n">8</span><span class="demo__sign"> </span><span class="demo__code">async function deliver(event: Event) {</span>
+                      </div>
+                      <div class="demo__line demo__line--ctx" style="--i: 1">
+                        <span class="demo__n">9</span><span class="demo__sign"> </span><span class="demo__code">  const endpoint = await getEndpoint(event)</span>
+                      </div>
+                      <div class="demo__line demo__line--del" style="--i: 2">
+                        <span class="demo__n">10</span><span class="demo__sign">−</span><span class="demo__code">  return await post(endpoint, event)</span>
+                      </div>
+                      <div class="demo__line demo__line--add" style="--i: 3">
+                        <span class="demo__n">11</span><span class="demo__sign">+</span><span class="demo__code">  const attempts = MAX_RETRIES</span>
+                      </div>
+                      <div class="demo__line demo__line--add" style="--i: 4">
+                        <span class="demo__n">12</span><span class="demo__sign">+</span><span class="demo__code">  for (let i = 0; i &lt; attempts; i++) {</span>
+                      </div>
+                      <div class="demo__line demo__line--add" style="--i: 5">
+                        <span class="demo__n">13</span><span class="demo__sign">+</span><span class="demo__code">    try {</span>
+                      </div>
+                      <div class="demo__line demo__line--add" style="--i: 6">
+                        <span class="demo__n">14</span><span class="demo__sign">+</span><span class="demo__code">      return await post(endpoint, event)</span>
+                      </div>
+                      <div class="demo__line demo__line--add" style="--i: 7">
+                        <span class="demo__n">15</span><span class="demo__sign">+</span><span class="demo__code">    } catch (err) {</span>
+                      </div>
+                      <div class="demo__line demo__line--add" style="--i: 8">
+                        <span class="demo__n">16</span><span class="demo__sign">+</span><span class="demo__code">      await wait(RETRY_DELAY)</span>
+                      </div>
+                      <div class="demo__line demo__line--add" style="--i: 9">
+                        <span class="demo__n">17</span><span class="demo__sign">+</span><span class="demo__code">    }</span>
+                      </div>
+                      <div class="demo__line demo__line--add" style="--i: 10">
+                        <span class="demo__n">18</span><span class="demo__sign">+</span><span class="demo__code">  }</span>
+                      </div>
+                      <div class="demo__line demo__line--ctx" style="--i: 11">
+                        <span class="demo__n">19</span><span class="demo__sign"> </span><span class="demo__code">}</span>
+                      </div>
+                    </div>
+
+                    <div class="demo__comment-wrap">
+                      <div class="demo__comment" id="demo-comment">
+                        <div class="demo__comment-head">
+                          <svg
+                            width="14"
+                            height="14"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                          >
+                            <path d="M12 8V4H8"></path>
+                            <rect width="16" height="12" x="4" y="8" rx="2"></rect>
+                            <path d="M2 14h2"></path>
+                            <path d="M20 14h2"></path>
+                            <path d="M15 13v2"></path>
+                            <path d="M9 13v2"></path>
+                          </svg>
+                          <span class="demo__author">greenlight[bot]</span>
+                          <span class="demo__time">agora mesmo</span>
+                        </div>
+                        <p class="demo__comment-body">
+                          A lógica de retry não tem teto de backoff — sob falha contínua isso pode sobrecarregar
+                          o endpoint. Considere backoff exponencial com jitter.
+                        </p>
+                        <div class="demo__comment-actions">
+                          <span class="tag tag--accent">Correção sugerida</span>
+                          <button class="btn-mini" type="button">Aplicar</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- checks sidebar (hidden below sm; the chrome chip carries the result) -->
+                  <div class="demo__checks">
+                    <p class="demo__checks-title">Checagens</p>
+                    <ul class="checks">
+                      <li class="check">
+                        <span class="check__row">
+                          <svg
+                            class="check__icon check__icon--wait spin"
+                            width="13"
+                            height="13"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                          >
+                            <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
+                          </svg>
+                          <svg
+                            class="check__icon check__icon--done"
+                            width="13"
+                            height="13"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                          >
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="m16 9-5.5 5.5L8 12"></path>
+                          </svg>
+                          <span class="check__label">Lint</span>
+                        </span>
+                      </li>
+                      <li class="check">
+                        <span class="check__row">
+                          <svg
+                            class="check__icon check__icon--wait spin"
+                            width="13"
+                            height="13"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                          >
+                            <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
+                          </svg>
+                          <svg
+                            class="check__icon check__icon--done"
+                            width="13"
+                            height="13"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                          >
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="m16 9-5.5 5.5L8 12"></path>
+                          </svg>
+                          <span class="check__label">Testes</span>
+                        </span>
+                        <p class="check__detail">passou · 2 adicionados</p>
+                      </li>
+                      <li class="check">
+                        <span class="check__row">
+                          <svg
+                            class="check__icon check__icon--wait spin"
+                            width="13"
+                            height="13"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                          >
+                            <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
+                          </svg>
+                          <svg
+                            class="check__icon check__icon--done"
+                            width="13"
+                            height="13"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                          >
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="m16 9-5.5 5.5L8 12"></path>
+                          </svg>
+                          <span class="check__label">Segurança</span>
+                        </span>
+                        <p class="check__detail">0 problemas</p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ How it works ============ -->
+      <section class="section" id="how-it-works" aria-labelledby="how-it-works-title">
+        <div class="container">
+          <div class="section__head reveal">
+            <p class="eyebrow">// como funciona</p>
+            <h2 class="section__title" id="how-it-works-title">
+              Da instalação ao merge em uma revisão
+            </h2>
+          </div>
+
+          <ol class="steps">
+            <li class="step reveal-item" style="--i: 0">
+              <div class="step__connector" aria-hidden="true"></div>
+              <div class="glass card step__card">
+                <div class="step__meta">
+                  <span class="step__num">01</span>
+                  <span class="glass icon-square">
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M12 15V3"></path>
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                      <path d="m7 10 5 5 5-5"></path>
+                    </svg>
+                  </span>
+                </div>
+                <h3 class="card__title">Instale o app</h3>
+                <p class="card__body">
+                  Um clique no GitHub Marketplace. Escolha os repositórios, defina as regras e pronto em dois minutos.
+                </p>
+              </div>
+            </li>
+            <li class="step reveal-item" style="--i: 1">
+              <div class="step__connector" aria-hidden="true"></div>
+              <div class="glass card step__card">
+                <div class="step__meta">
+                  <span class="step__num">02</span>
+                  <span class="glass icon-square">
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M3 7V5a2 2 0 0 1 2-2h2"></path>
+                      <path d="M17 3h2a2 2 0 0 1 2 2v2"></path>
+                      <path d="M21 17v2a2 2 0 0 1-2 2h-2"></path>
+                      <path d="M7 21H5a2 2 0 0 1-2-2v-2"></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                      <path d="m16 16-1.9-1.9"></path>
+                    </svg>
+                  </span>
+                </div>
+                <h3 class="card__title">Todo PR é revisado</h3>
+                <p class="card__body">
+                  O Greenlight lê o diff em contexto — comentários inline, correções sugeridas e
+                  lacunas de teste sinalizadas na hora.
+                </p>
+              </div>
+            </li>
+            <li class="step reveal-item" style="--i: 2">
+              <div class="glass card step__card">
+                <div class="step__meta">
+                  <span class="step__num">03</span>
+                  <span class="glass icon-square">
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <circle cx="18" cy="18" r="3"></circle>
+                      <circle cx="6" cy="6" r="3"></circle>
+                      <path d="M6 21V9a9 9 0 0 0 9 9"></path>
+                    </svg>
+                  </span>
+                </div>
+                <h3 class="card__title">Faça o merge quando estiver verde</h3>
+                <p class="card__body">
+                  As checagens bloqueadas ficam verdes conforme os problemas são resolvidos. Nada de
+                  esperar revisor para o óbvio.
+                </p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ============ Features (bento) ============ -->
+      <section class="section" id="features" aria-labelledby="features-title">
+        <div class="container">
+          <div class="section__head reveal">
+            <p class="eyebrow">// recursos</p>
+            <h2 class="section__title" id="features-title">
+              Tudo o que um revisor sênior diria
+            </h2>
+          </div>
+
+          <ul class="bento">
+            <li class="bento__item bento__item--wide reveal-item" style="--i: 0">
+              <div class="glass card feature">
+                <span class="glass icon-square">
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"
+                    ></path>
+                  </svg>
+                </span>
+                <h3 class="card__title">Comentários inline na revisão</h3>
+                <p class="card__body">
+                  O feedback aparece exatamente onde o código está — com contexto, severidade e
+                  correções em um clique.
+                </p>
+              </div>
+            </li>
+            <li class="bento__item reveal-item" style="--i: 1">
+              <div class="glass card feature">
+                <span class="glass icon-square">
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"
+                    ></path>
+                    <path d="m9 12 2 2 4-4"></path>
+                  </svg>
+                </span>
+                <h3 class="card__title">Análise de segurança</h3>
+                <p class="card__body">
+                  Cada diff é escaneado por injeção, segredos e padrões inseguros. Zero configuração.
+                </p>
+              </div>
+            </li>
+            <li class="bento__item reveal-item" style="--i: 2">
+              <div class="glass card feature">
+                <span class="glass icon-square">
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2"
+                    ></path>
+                    <path d="M6.453 15h11.094"></path>
+                    <path d="M8.5 2h7"></path>
+                  </svg>
+                </span>
+                <h3 class="card__title">Sugestões de teste</h3>
+                <p class="card__body">
+                  Falta cobertura no branch novo? O Greenlight escreve o teste, você aprova.
+                </p>
+              </div>
+            </li>
+            <li class="bento__item reveal-item" style="--i: 3">
+              <div class="glass card feature">
+                <span class="glass icon-square">
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <line x1="10" x2="14" y1="2" y2="2"></line>
+                    <line x1="12" x2="15" y1="14" y2="11"></line>
+                    <circle cx="12" cy="14" r="8"></circle>
+                  </svg>
+                </span>
+                <h3 class="card__title">Revisão em menos de 30s</h3>
+                <p class="card__body">
+                  Tempo mediano de revisão em 1,2M de PRs — enquanto o CI ainda está aquecendo.
+                </p>
+              </div>
+            </li>
+            <li class="bento__item reveal-item" style="--i: 4">
+              <div class="glass card feature">
+                <span class="glass icon-square">
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"></path>
+                    <path d="M9 13a4.5 4.5 0 0 0 3-4"></path>
+                    <path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"></path>
+                    <path d="M3.477 10.896a4 4 0 0 1 .585-.396"></path>
+                    <path d="M6 18a4 4 0 0 1-1.967-.516"></path>
+                    <path d="M12 13h4"></path>
+                    <path d="M12 18h6a2 2 0 0 1 2 2v1"></path>
+                    <path d="M12 8h8"></path>
+                    <path d="M16 8V5a2 2 0 0 1 2-2"></path>
+                    <circle cx="16" cy="13" r=".5"></circle>
+                    <circle cx="18" cy="3" r=".5"></circle>
+                    <circle cx="20" cy="21" r=".5"></circle>
+                    <circle cx="20" cy="8" r=".5"></circle>
+                  </svg>
+                </span>
+                <h3 class="card__title">Aprende a sua base de código</h3>
+                <p class="card__body">
+                  Regras da casa, padrões e convenções — revisados como o seu sênior faria.
+                </p>
+              </div>
+            </li>
+            <li class="bento__item bento__item--full reveal-item" style="--i: 5">
+              <div class="glass card feature">
+                <span class="glass icon-square">
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M12 19h8"></path>
+                    <path d="m4 17 6-6-6-6"></path>
+                  </svg>
+                </span>
+                <h3 class="card__title">Vive no seu terminal</h3>
+                <p class="card__body">Um CLI e um app do GitHub no mesmo lugar. Rode gl review onde quiser.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ============ Integrations ============ -->
+      <div class="integrations" role="region" aria-label="Integrations">
+        <p class="integrations__line reveal">// funciona onde você trabalha</p>
+        <ul class="chips">
+          <li class="glass chip-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path
+                d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
+              />
+            </svg>
+            GitHub
+          </li>
+          <li class="glass chip-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path
+                d="m23.6004 9.5927-.0337-.0862L20.3.9814a.851.851 0 0 0-.3362-.405.8748.8748 0 0 0-.9997.0539.8748.8748 0 0 0-.29.4399l-2.2055 6.748H7.5375l-2.2057-6.748a.8573.8573 0 0 0-.29-.4412.8748.8748 0 0 0-.9997-.0537.8585.8585 0 0 0-.3362.4049L.4332 9.5015l-.0325.0862a6.0657 6.0657 0 0 0 2.0119 7.0105l.0113.0087.03.0213 4.976 3.7264 2.462 1.8633 1.4995 1.1321a1.0085 1.0085 0 0 0 1.2197 0l1.4995-1.1321 2.4619-1.8633 5.006-3.7489.0125-.01a6.0682 6.0682 0 0 0 2.0094-7.003z"
+              />
+            </svg>
+            GitLab
+          </li>
+          <li class="glass chip-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path
+                d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"
+              />
+            </svg>
+            Slack
+          </li>
+          <li class="glass chip-item">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M12 19h8"></path>
+              <path d="m4 17 6-6-6-6"></path>
+            </svg>
+            CLI
+          </li>
+        </ul>
+      </div>
+
+      <!-- ============ Stats ============ -->
+      <div class="stats-wrap">
+        <div class="glass stats" id="stats">
+          <ul class="stats__grid">
+            <li class="stat">
+              <p class="stat__value" data-count="1.2" data-decimals="1" data-suffix="M">0M</p>
+              <p class="stat__label">PRs revisados</p>
+            </li>
+            <li class="stat">
+              <p class="stat__value" data-count="42" data-suffix="k">0k</p>
+              <p class="stat__label">horas economizadas por semana</p>
+            </li>
+            <li class="stat">
+              <p class="stat__value" data-count="30" data-prefix="&lt;" data-suffix="s">0s</p>
+              <p class="stat__label">tempo mediano de revisão</p>
+            </li>
+            <li class="stat">
+              <p class="stat__value" data-count="99.9" data-decimals="1" data-suffix="%">0%</p>
+              <p class="stat__label">uptime, últimos 90 dias</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ============ Pricing ============ -->
+      <section class="section" id="pricing" aria-labelledby="pricing-title">
+        <div class="container">
+          <div class="section__head reveal">
+            <p class="eyebrow">// preços</p>
+            <h2 class="section__title" id="pricing-title">Preço simples, por dev</h2>
+          </div>
+
+          <ul class="plans">
+            <li class="plan reveal-item" style="--i: 0">
+              <div class="glass card plan__card">
+                <div class="plan__badge-slot"></div>
+                <h3 class="plan__name">Grátis</h3>
+                <p class="plan__price">$0</p>
+                <p class="plan__note">Para open source e projetos pessoais</p>
+                <ul class="plan__features">
+                  <li>
+                    <svg
+                      class="plan__check"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M20 6 9 17l-5-5"></path>
+                    </svg>
+                    <span>1 repositório</span>
+                  </li>
+                  <li>
+                    <svg
+                      class="plan__check"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M20 6 9 17l-5-5"></path>
+                    </svg>
+                    <span>Revisões de PR ilimitadas</span>
+                  </li>
+                  <li>
+                    <svg
+                      class="plan__check"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M20 6 9 17l-5-5"></path>
+                    </svg>
+                    <span>Suporte da comunidade</span>
+                  </li>
+                </ul>
+                <a class="btn btn--ghost plan__cta" href="#">Começar</a>
+              </div>
+            </li>
+
+            <li class="plan reveal-item" style="--i: 1">
+              <div class="glass card plan__card plan__card--highlighted">
+                <div class="plan__badge-slot">
+                  <span class="tag tag--outline">Mais popular</span>
+                </div>
+                <h3 class="plan__name">Team</h3>
+                <p class="plan__price">$19/dev/mês</p>
+                <p class="plan__note">Para times que entregam todo dia</p>
+                <ul class="plan__features">
+                  <li>
+                    <svg
+                      class="plan__check"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M20 6 9 17l-5-5"></path>
+                    </svg>
+                    <span>Repositórios ilimitados</span>
+                  </li>
+                  <li>
+                    <svg
+                      class="plan__check"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M20 6 9 17l-5-5"></path>
+                    </svg>
+                    <span>Análise de segurança</span>
+                  </li>
+                  <li>
+                    <svg
+                      class="plan__check"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M20 6 9 17l-5-5"></path>
+                    </svg>
+                    <span>Sugestões de teste</span>
+                  </li>
+                  <li>
+                    <svg
+                      class="plan__check"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M20 6 9 17l-5-5"></path>
+                    </svg>
+                    <span>Slack + GitLab</span>
+                  </li>
+                  <li>
+                    <svg
+                      class="plan__check"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M20 6 9 17l-5-5"></path>
+                    </svg>
+                    <span>Suporte prioritário</span>
+                  </li>
+                </ul>
+                <a class="btn btn--primary plan__cta" href="#">Começar teste grátis</a>
+              </div>
+            </li>
+
+            <li class="plan reveal-item" style="--i: 2">
+              <div class="glass card plan__card">
+                <div class="plan__badge-slot"></div>
+                <h3 class="plan__name">Enterprise</h3>
+                <p class="plan__price">Personalizado</p>
+                <p class="plan__note">Para empresas com requisitos rígidos</p>
+                <ul class="plan__features">
+                  <li>
+                    <svg
+                      class="plan__check"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M20 6 9 17l-5-5"></path>
+                    </svg>
+                    <span>SSO/SAML</span>
+                  </li>
+                  <li>
+                    <svg
+                      class="plan__check"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M20 6 9 17l-5-5"></path>
+                    </svg>
+                    <span>Runners self-hosted</span>
+                  </li>
+                  <li>
+                    <svg
+                      class="plan__check"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M20 6 9 17l-5-5"></path>
+                    </svg>
+                    <span>Motor de regras personalizado</span>
+                  </li>
+                  <li>
+                    <svg
+                      class="plan__check"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M20 6 9 17l-5-5"></path>
+                    </svg>
+                    <span>SLA</span>
+                  </li>
+                  <li>
+                    <svg
+                      class="plan__check"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M20 6 9 17l-5-5"></path>
+                    </svg>
+                    <span>Suporte dedicado</span>
+                  </li>
+                </ul>
+                <a class="btn btn--ghost plan__cta" href="#">Falar com vendas</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ============ CTA ============ -->
+      <section class="cta" aria-labelledby="cta-title">
+        <div class="cta__wrap reveal">
+          <div class="glass card cta__banner">
+            <div class="glow cta__glow" aria-hidden="true"></div>
+            <div class="cta__content">
+              <h2 class="cta__title" id="cta-title">Entregue código, não revisões.</h2>
+              <p class="cta__sub">
+                O Greenlight é grátis para open source e leva dois minutos para configurar.
+              </p>
+              <div class="cta__actions">
+                <a class="btn btn--primary" href="#">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
+                    />
+                  </svg>
+                  Instalar GitHub App
+                </a>
+                <a class="btn btn--ghost" href="#">Ler a documentação</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============ Footer ============ -->
+    <footer class="footer">
+      <div class="footer__inner">
+        <div>
+          <a class="brand" href="#">
+            <svg
+              class="brand__mark"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="18" cy="18" r="3"></circle>
+              <circle cx="6" cy="6" r="3"></circle>
+              <path d="M13 6h3a2 2 0 0 1 2 2v7"></path>
+              <line x1="6" x2="6" y1="9" y2="21"></line>
+            </svg>
+            <span class="brand__name">greenlight</span>
+          </a>
+          <p class="footer__tagline">Revisão de código com IA que entrega.</p>
+        </div>
+
+        <ul class="socials">
+          <li>
+            <a href="#" aria-label="GitHub">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path
+                  d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
+                />
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="#" aria-label="LinkedIn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path
+                  d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+                />
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="#" aria-label="RSS">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M4 11a9 9 0 0 1 9 9"></path>
+                <path d="M4 4a16 16 0 0 1 16 16"></path>
+                <circle cx="5" cy="19" r="1"></circle>
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </footer>
+
+    <script src="main.js" defer></script>
+  </body>
+</html>
