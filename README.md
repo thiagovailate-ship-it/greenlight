@@ -11,20 +11,6 @@ superfícies.
 > Versão React/Vite/Tailwind do mesmo produto: `greenlight-landing/`. Esta pasta é a
 > versão estática e em português (pt-BR).
 
-## Como abrir
-
-- **Duplo clique** em `index.html` — funciona direto pelo sistema de arquivos
-  (`file://`), porque os scripts são clássicos (`<script src>`), não módulos ES.
-- Ou sirva a pasta, se preferir HTTP:
-
-  ```bash
-  npx serve .          # ou
-  python -m http.server 5174
-  ```
-
-- As fontes (Inter e JetBrains Mono) vêm do Google Fonts. Sem rede, o layout se
-  mantém com as fontes de fallback do sistema.
-
 ## Estrutura
 
 ```
@@ -33,17 +19,6 @@ greenlight-vanilla/
   styles.css    tokens, base, componentes, breakpoints e preferências do usuário
   main.js       só comportamento: menu, sequência do diff, count-ups, reveals
 ```
-
-## Onde editar o texto
-
-**Todo o texto está no próprio `index.html`.** Diferente da versão React (que
-centraliza a cópia em `src/content.js`), aqui cada seção é um bloco comentado
-(`<!-- ====== Hero ====== -->`, `<!-- ====== Pricing ====== -->`, …) — edite
-diretamente ali. Nada de texto visível vive no CSS.
-
-A única exceção são os rótulos que o JS troca ao final da sequência da demo:
-`Checagens em andamento` → `Pronto para o merge`, além de `Abrir menu` / `Fechar
-menu`. Os três estão em `main.js` e replicados no HTML no estado inicial.
 
 ## O que o JavaScript faz
 
@@ -72,19 +47,3 @@ painel do diff aparece direto no estado final.
 - `prefers-reduced-transparency: reduce` → o vidro vira um fundo opaco.
 - Piso de contraste: `zinc-400` para texto secundário (≥ 4.5:1); nada mais escuro é
   usado sobre este fundo.
-
-## Desempenho
-
-Cerca de **86 KB no total, ≈ 15 KB em gzip** (7,6 KB de HTML + 5,2 KB de CSS +
-2,3 KB de JS) — sem runtime de framework e sem bundler. Os 17 ícones do lucide e as
-4 marcas (GitHub, GitLab, Slack, LinkedIn) são SVG inline, sem requisições extras.
-As animações usam apenas `transform` e `opacity`.
-
-## Diferenças em relação à versão React
-
-- Mesma marcação visual e os mesmos valores de design (tokens, espaçamentos,
-  breakpoints em 640 / 768 / 1024 px).
-- O preço do plano usa `clamp()`: como o texto em pt-BR é mais longo
-  ("Personalizado", "$19/dev/mês"), o tamanho se adapta para não estourar a largura
-  dos cards de 3 colunas entre 768 px e 1024 px.
-- O conteúdo está em português (a versão React segue em inglês).
