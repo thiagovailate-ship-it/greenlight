@@ -1,15 +1,7 @@
 # Greenlight — landing page (HTML/CSS/JS, sem build)
 
 Landing page do **Greenlight** — ferramenta fictícia de revisão de código com IA para
-pull requests — reescrita em HTML, CSS e JavaScript puros: sem npm, sem bundler, sem
-framework. Basta abrir o `index.html`.
-
-A identidade visual é a mesma da versão React: superfície quase preta, acento
-esmeralda, títulos em JetBrains Mono sobre texto em Inter, vidro (glass) em todas as
-superfícies.
-
-> Versão React/Vite/Tailwind do mesmo produto: `greenlight-landing/`. Esta pasta é a
-> versão estática e em português (pt-BR).
+pull requests — reescrita em HTML, CSS e JavaScript.
 
 ## Estrutura
 
