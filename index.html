@@ -16,6 +16,7 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="styles.css" />
     <!-- `js` gates the scroll-reveal styles: without it every element stays visible. -->
     <script>
@@ -52,6 +53,7 @@
         <nav class="nav" aria-label="Principal">
           <a class="nav__link" href="#how-it-works">Como funciona</a>
           <a class="nav__link" href="#features">Recursos</a>
+          <a class="nav__link" href="#agent">Agente ao vivo</a>
           <a class="nav__link" href="#pricing">Preços</a>
           <a class="btn btn--primary nav__cta" href="#">
             <svg
@@ -115,6 +117,7 @@
         <nav class="mobile-menu__nav" aria-label="Menu">
           <a class="mobile-menu__link" href="#how-it-works">Como funciona</a>
           <a class="mobile-menu__link" href="#features">Recursos</a>
+          <a class="mobile-menu__link" href="#agent">Agente ao vivo</a>
           <a class="mobile-menu__link" href="#pricing">Preços</a>
         </nav>
       </div>
@@ -170,6 +173,9 @@
                 </button>
               </div>
               <p class="hero__trust">Grátis para open source · setup em 2 min · GitHub e GitLab</p>
+              <p class="hero__live">
+                <a href="#agent">↓ o agente desta página roda de verdade — dispare um PR</a>
+              </p>
             </div>
 
             <!-- DiffDemo -->
@@ -707,6 +713,107 @@
         </div>
       </section>
 
+
+      <!-- ============ Live agent ============ -->
+      <section class="section agent-section" id="agent" aria-labelledby="agent-title">
+        <div class="container">
+          <div class="section__head reveal">
+            <p class="eyebrow">// o agente, de verdade</p>
+            <h2 class="section__title" id="agent-title">
+              A demo acima é uma animação. Esta aqui roda.
+            </h2>
+            <p class="agent__lead">
+              O mesmo motor que revisa este repositório: <strong id="agent-rule-count">42 regras</strong>
+              determinísticas, contexto aprendido da base e um LLM opcional. Escolha um PR de exemplo, edite o
+              diff e dispare — cada etapa abaixo é um evento real do servidor.
+            </p>
+          </div>
+
+          <div class="glass agent" data-agent>
+            <div class="agent__bar">
+              <span class="agent__pill" id="agent-pill" data-state="loading">
+                <span class="agent__dot" aria-hidden="true"></span>
+                <span id="agent-pill-text">conectando ao motor…</span>
+              </span>
+              <div
+                class="agent__scenarios"
+                id="agent-scenarios"
+                role="group"
+                aria-label="Pull requests de exemplo"
+              ></div>
+            </div>
+
+            <div class="agent__grid">
+              <div class="agent__editor">
+                <div class="agent__pane-head">
+                  <span class="agent__pane-title">diff do pull request</span>
+                  <span class="agent__pane-meta" id="agent-diff-meta">—</span>
+                </div>
+                <label class="sr-only" for="agent-diff">Diff unificado do pull request</label>
+                <textarea
+                  class="agent__textarea"
+                  id="agent-diff"
+                  spellcheck="false"
+                  autocapitalize="off"
+                  autocomplete="off"
+                  wrap="off"
+                  placeholder="diff --git a/api/webhooks.ts b/api/webhooks.ts"
+                ></textarea>
+                <div class="agent__actions">
+                  <button class="btn btn--primary btn--sm" type="button" id="agent-run">
+                    Revisar este PR
+                  </button>
+                  <button class="btn btn--ghost btn--sm" type="button" id="agent-reset">
+                    Restaurar exemplo
+                  </button>
+                  <span class="agent__shortcut">Ctrl + Enter</span>
+                </div>
+              </div>
+
+              <div class="agent__result">
+                <div class="agent__verdict" id="agent-verdict" data-status="idle" aria-live="polite">
+                  <span class="agent__verdict-icon" aria-hidden="true"></span>
+                  <div>
+                    <p class="agent__verdict-label" id="agent-verdict-label">Aguardando o disparo</p>
+                    <p class="agent__verdict-reason" id="agent-verdict-reason">
+                      O pipeline mostra cada etapa assim que ela termina.
+                    </p>
+                  </div>
+                </div>
+
+                <ol class="agent__stages" id="agent-stages" aria-label="Etapas do pipeline"></ol>
+
+                <ul class="agent__checks" id="agent-checks" aria-label="Checagens"></ul>
+
+                <p class="agent__summary" id="agent-summary" hidden></p>
+
+                <div class="agent__findings" id="agent-findings">
+                  <p class="agent__empty" id="agent-empty">
+                    Nada foi revisado ainda. Dispare o primeiro PR.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="agent__foot">
+              <span id="agent-engine">motor: —</span>
+              <span class="agent__foot-links">
+                <a href="/api/health">/api/health</a>
+                <a href="/api/rules">/api/rules</a>
+                <a href="/api/github/status">GitHub App</a>
+              </span>
+            </div>
+          </div>
+
+          <noscript>
+            <p class="agent__nojs">
+              Este painel precisa de JavaScript e do servidor local. Rode <code>npm start</code> e abra
+              <code>http://localhost:3000</code>.
+            </p>
+          </noscript>
+        </div>
+      </section>
+
       <!-- ============ Integrations ============ -->
       <div class="integrations" role="region" aria-label="Integrations">
         <p class="integrations__line reveal">// funciona onde você trabalha</p>
@@ -1153,5 +1260,6 @@
     </footer>
 
     <script src="main.js" defer></script>
+    <script src="agent/agent.js" defer></script>
   </body>
 </html>

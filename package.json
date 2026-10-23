@@ -1,0 +1,32 @@
+{
+  "name": "greenlight-agent",
+  "version": "1.0.0",
+  "description": "Agente de revisão de código para pull requests — motor determinístico + LLM opcional, zero dependências.",
+  "private": true,
+  "license": "MIT",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "greenlight": "./bin/greenlight.js",
+    "gl": "./bin/greenlight.js"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "review": "node bin/greenlight.js review",
+    "rules": "node bin/greenlight.js rules",
+    "sync": "node bin/greenlight.js sync",
+    "test": "node --test"
+  },
+  "keywords": [
+    "code-review",
+    "pull-request",
+    "agent",
+    "static-analysis",
+    "github-app"
+  ],
+  "dependencies": {},
+  "devDependencies": {}
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "retry",
+    "title": "feat: webhook retries",
+    "subtitle": "o mesmo PR da landing page",
+    "file": "retry.diff",
+    "note": "retry com espera fixa — o achado tem correção aplicável"
+  },
+  {
+    "id": "secret-sql",
+    "title": "chore: rota de cobrança",
+    "subtitle": "credencial + SQL",
+    "file": "secret-sql.diff",
+    "note": "segredo hardcoded e injeção de SQL no mesmo diff"
+  },
+  {
+    "id": "xss-eval",
+    "title": "feat: comentário renderizado",
+    "subtitle": "segurança no front",
+    "file": "xss-eval.diff",
+    "note": "eval, innerHTML, MD5 e token previsível"
+  },
+  {
+    "id": "clean",
+    "title": "feat: withRetry",
+    "subtitle": "já está verde",
+    "file": "clean.diff",
+    "note": "backoff exponencial com jitter e teste no mesmo PR"
+  }
+]

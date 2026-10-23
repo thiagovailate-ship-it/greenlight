@@ -1,0 +1,46 @@
+diff --git a/lib/retry.js b/lib/retry.js
+new file mode 100644
+index 0000000..a1b2c3d
+--- /dev/null
++++ b/lib/retry.js
+@@ -0,0 +1,20 @@
++const DEFAULT_ATTEMPTS = 3
++const BASE_DELAY_MS = 250
++
++export async function withRetry(task, options = {}) {
++  const attempts = options.attempts ?? DEFAULT_ATTEMPTS
++  let lastError
++
++  for (let i = 0; i < attempts; i++) {
++    try {
++      return await task()
++    } catch (error) {
++      lastError = error
++      if (i === attempts - 1) break
++      const backoff = BASE_DELAY_MS * 2 ** i + Math.random() * BASE_DELAY_MS
++      await new Promise((resolve) => setTimeout(resolve, backoff))
++    }
++  }
++
++  throw lastError
++}
+diff --git a/test/retry.test.js b/test/retry.test.js
+new file mode 100644
+index 0000000..d4e5f6a
+--- /dev/null
++++ b/test/retry.test.js
+@@ -0,0 +1,14 @@
++const test = require('node:test')
++const assert = require('node:assert/strict')
++
++const { withRetry } = require('../lib/retry.js')
++
++test('withRetry tenta de novo e devolve o resultado', async () => {
++  let calls = 0
++  const result = await withRetry(async () => {
++    calls += 1
++    if (calls < 2) throw new Error('falhou')
++    return 'ok'
++  })
++  assert.equal(result, 'ok')
++})

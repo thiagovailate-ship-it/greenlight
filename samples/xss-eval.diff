@@ -1,0 +1,14 @@
+diff --git a/web/render.js b/web/render.js
+index 7e8d9f0..1a2b3c4 100644
+--- a/web/render.js
++++ b/web/render.js
+@@ -1,4 +1,9 @@
+ import { createHash } from 'node:crypto'
+ 
+ export function renderComment(req, el) {
++  const payload = eval(req.body.script)
++  el.innerHTML = req.query.html
++  const sessionToken = Math.random().toString(36).slice(2)
++  const digest = createHash('md5').update(payload).digest('hex')
++  return { payload, sessionToken, digest }
+ }
