@@ -18,6 +18,10 @@ npm run sync       # aprende o repositório (índice + convenções)
 node bin/greenlight.js review samples/retry.diff
 ```
 
+Planejamento e contratos ficam em **[PLAN.md](PLAN.md)** (o que vem depois e por quê),
+**[SPECS.md](SPECS.md)** (os contratos que o código cumpre) e **[AGENTS.md](AGENTS.md)** (como
+mexer no repositório sem quebrar as regras da casa).
+
 ---
 
 ## O que a landing promete × o que existe no repositório
@@ -53,13 +57,16 @@ agent/                motor de revisão (Node, sem dependências)
   suggestions.js      geração de testes por framework
   patch.js            aplica uma correção sugerida no próprio diff
   llm.js              camada opcional com redação de segredos
-  github.js           App JWT, webhook, comentários inline, check run
+  github.js           cliente da API: JWT, PR, comentários inline, check run
   learn.js            índice do repositório (gl sync)
   memory.js           dispensas persistentes (.greenlight/memory.json)
-server/               HTTP + SSE + webhook, sem frameworks
+server/               HTTP + SSE, sem frameworks; github-app.js trata o webhook
 bin/greenlight.js     CLI (gl)
 samples/              PRs de exemplo usados na página
 test/                 101 testes de unidade, integração e CLI
+PLAN.md               roadmap por ondas, métricas e Definition of Done
+SPECS.md              contratos de dado, API, CLI, GitHub App e painel
+AGENTS.md             manual de operação para quem (ou o que) mexe no código
 ```
 
 ---
