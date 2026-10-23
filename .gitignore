@@ -1,0 +1,10 @@
+node_modules/
+.DS_Store
+*.log
+.env
+.env.local
+
+# Estado local do agente (o índice é específico da máquina; o histórico de
+# dispensas em .greenlight/memory.json é para ser compartilhado pelo time).
+.greenlight/index.json
+.greenlight/last-review.json

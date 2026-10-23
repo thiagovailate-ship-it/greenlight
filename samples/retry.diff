@@ -1,0 +1,32 @@
+diff --git a/api/webhooks.ts b/api/webhooks.ts
+index 3f2a1b7..9c4d5e2 100644
+--- a/api/webhooks.ts
++++ b/api/webhooks.ts
+@@ -8,4 +8,11 @@ import { post, wait } from './http'
+ export async function deliver(event: Event) {
+   const endpoint = await getEndpoint(event)
+-  return await post(endpoint, event)
++  const attempts = MAX_RETRIES
++  for (let i = 0; i < attempts; i++) {
++    try {
++      return await post(endpoint, event)
++    } catch (err) {
++      await wait(RETRY_DELAY)
++    }
++  }
+ }
+diff --git a/api/webhooks.test.ts b/api/webhooks.test.ts
+new file mode 100644
+index 0000000..b6f5a0c
+--- /dev/null
++++ b/api/webhooks.test.ts
+@@ -0,0 +1,9 @@
++import test from 'node:test'
++import assert from 'node:assert/strict'
++
++import { deliver } from './webhooks.js'
++
++test('deliver tenta novamente e devolve a resposta', async () => {
++  const result = await deliver({ id: 'evt_1' })
++  assert.ok(result)
++})

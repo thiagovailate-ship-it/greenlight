@@ -5,7 +5,9 @@
 (function () {
   'use strict';
 
-  var reduceQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var reduceQuery = window.matchMedia
+    ? window.matchMedia('(prefers-reduced-motion: reduce)')
+    : { matches: false, addEventListener: null, addListener: null };
   var reduced = reduceQuery.matches;
 
   /* ------------------------------------------------------------ Mobile menu */

@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "failOn": "high",
+  "ignore": [
+    "node_modules/**",
+    ".git/**",
+    "dist/**",
+    "build/**",
+    "coverage/**",
+    ".greenlight/**",
+    "samples/**",
+    "*.min.js"
+  ],
+  "checks": {
+    "lint": true,
+    "bugs": true,
+    "tests": true,
+    "security": true
+  },
+  "tests": {
+    "requireChangedTests": true
+  },
+  "rules": {
+    "maxLineLength": 140,
+    "forbidImports": [],
+    "custom": []
+  },
+  "security": {
+    "excludePaths": ["test/**", "agent/rules/**"]
+  },
+  "exceptions": [
+    {
+      "rule": "LNT001",
+      "paths": ["bin/**", "server/**"],
+      "reason": "saída do CLI e log do servidor são parte do produto"
+    },
+    {
+      "rule": "LNT009",
+      "paths": ["agent/agent.js", "main.js"],
+      "reason": "cliente sem build mantém o estilo ES5 da landing"
+    }
+  ],
+  "github": {
+    "requestChanges": false,
+    "reviewDrafts": false,
+    "maxInlineComments": 20,
+    "checks": true
+  },
+  "llm": {
+    "enabled": true
+  }
+}
